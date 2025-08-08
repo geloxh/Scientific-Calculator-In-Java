@@ -125,7 +125,35 @@ private static class ExpressionParser {
     private double parseTerm(String expression) {
         double x = parseFactor(expression);
         while (true) {
-            if (eat('*' ))
+            if (eat('*', expression)) x *= parseFactor(expression);
+            else if (eat('/', expression)) x /= parseFactor(expression);
+            else if (eat('^', expression)) x = Math.pow(x, parseFactor(expression));
+            else return x;
+        }
+    }
+
+    // Parse The Factor By Handling Positive/Negative Signs, Parentheses, Numbers And Functions
+
+    private double parseFactor(String expression) {
+        if (eat('+', expression)) return parseFactor(expression);
+        if (eat('-', expression)) return -parseFactor(expression);
+
+        double x;
+        int startPos = this.pos;
+        if (eat('(', expression)) {
+
+            // Handle Parentheses By Recursively Parsing The Expression Inside Them
+
+            x = parseExpression(expression);
+            eat(')', expression);
+        } else if ((ch >= '0' && ch <= '9') || ch == '.') {
+
+            // Parse Numbers (Integer Or Decimal)
+
+            while ((ch >= '0' && ch <= '9') || ch == '.') nextChar (expression);
+            x = Double.parseDouble(expression.substring(startPos, this.pos));
+        } else if (ch >= 'a' && ch <= 'z') {
+            
         }
     }
 }
