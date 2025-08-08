@@ -21,4 +21,10 @@ public ScientificCalculator() {
     buttonPanel.setForeground(Color.PINK);
 
     // Button Labels For The Calculator
+    String[] buttonLabels = {
+        "1", "2", "3", "/", "4", "5", "6", "*", "7", "8",
+        "9", "-", "0", ".", "=", "+", "Clear", "(", ")",
+        "^", "sqrt", 
+
+    }
 }
