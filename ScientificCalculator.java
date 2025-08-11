@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ScientificCalculator extends Jframe implements ActionListener;
+public class ScientificCalculator extends JFrame implements ActionListener
 
 public ScientificCalculator() {
     setTitle("Scientific Calculator In Java");
@@ -153,6 +153,49 @@ private static class ExpressionParser {
             while ((ch >= '0' && ch <= '9') || ch == '.') nextChar (expression);
             x = Double.parseDouble(expression.substring(startPos, this.pos));
         } else if (ch >= 'a' && ch <= 'z') {
+            // Parse Functions (Such As sqrt, sin, cos, etc..)
+            while (ch >= 'a' && ch <= 'z') nextChar(expression);
+            String func = expression.substring(startPos, this.pos);
+            x = parseFactor(expression);
+            switch (func) {
+                case "sqrt":
+                    x = Math.sqrt(x);
+                    break;
+                case "cbrt":
+                    x = Math.cbrt(x);
+                    break;
+                case "log":
+                    x = Math.log10(x);
+                    break;
+                case "sin":
+                    x = Math.sin(Math.toRadians(x));
+                    break;
+                case "tan":
+                    x = Math.tan(Math.toRadians(x));
+                    break;
+                case "asin":
+                    x = Math.toDegrees(Math.asin(x));
+                    break;
+                case "acos":
+                    x = Math.toDegrees(Math.acos(x));
+                    break;
+                case "atan":
+                    x = Math.toDegrees(Math.atan(x));
+                    break;
+                case "!":
+                    x = factorial((int) x);
+                    break;
+                case "%":
+                    x = x / 100.0;
+                    break;
+                case "|x|":
+                    x = Math.abs(x);
+                    break;
+                default:
+                    throw new RuntimeException("Unknown Function: " + func);
+                    
+            }
+            
             
         }
     }
